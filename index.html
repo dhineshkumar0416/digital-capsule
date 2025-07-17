@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Digital Time Capsule</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🎁 Create Your Time Capsule</h1>
+  <form id="capsuleForm" enctype="multipart/form-data">
+    <input type="text" name="title" placeholder="Title" required><br>
+    <textarea name="message" placeholder="Your message..." required></textarea><br>
+    <input type="file" name="media"><br>
+    <input type="date" name="unlockDate" required><br>
+    <select name="privacy">
+      <option value="private">Private</option>
+      <option value="public">Public on unlock</option>
+    </select><br>
+    <button type="submit">Create Capsule</button>
+  </form>
+
+  <script>
+    document.getElementById('capsuleForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const response = await fetch('/api/capsules', {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.json();
+      alert(result.message);
+    }
+  </script>
+</body>
+</html>
